@@ -50,3 +50,7 @@ faiss-cpu
 tiktoken
 PyMuPDF
 docx2txt
+faiss-cpu
+tiktoken
+PyMuPDF
+docx2txt
