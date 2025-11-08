@@ -41,3 +41,12 @@ urllib3==2.5.0
 python-dotenv
 langchain
 openai
+streamlit
+langchain
+langchain-community
+langchain-openai
+python-dotenv
+faiss-cpu
+tiktoken
+PyMuPDF
+docx2txt
