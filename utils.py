@@ -10,12 +10,13 @@ from langchain_community.vectorstores import Chroma
 from langchain_openai.embeddings import OpenAIEmbeddings
 from langchain_openai import ChatOpenAI
 
-from langchain.chains.combine_documents import create_retrieval_chain, create_stuff_documents_chain
+# ✅ create_retrieval_chain と create_stuff_documents_chain の正しいimport
+from langchain.chains import create_retrieval_chain
+from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains.history_aware_retriever import create_history_aware_retriever
 
 from langchain_core.messages import HumanMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 import streamlit as st
@@ -44,12 +45,19 @@ def create_vector_db(file_path, persist_directory):
 
     # --- ドキュメントを分割 ---
     docs = loader.load()
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=ct.CHUNK_SIZE, chunk_overlap=ct.CHUNK_OVERLAP)
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=ct.CHUNK_SIZE,
+        chunk_overlap=ct.CHUNK_OVERLAP
+    )
     split_docs = text_splitter.split_documents(docs)
 
     # --- 埋め込みモデルとDB作成 ---
     embeddings = OpenAIEmbeddings(model=ct.EMBEDDING_MODEL)
-    vectordb = Chroma.from_documents(split_docs, embeddings, persist_directory=persist_directory)
+    vectordb = Chroma.from_documents(
+        split_docs,
+        embeddings,
+        persist_directory=persist_directory
+    )
     vectordb.persist()
     return vectordb
 
